@@ -5,8 +5,9 @@ import time
 
 sequenceFile = "sequences.txt"
 seqLenFile = "seqLen.txt"
+tmpFile ="template.txt"
 genTimes = 1      # iterations number (generating 128 sequence per iteration)
-prompts_num = 64
+prompts_num = 1024
 max_length = 128    # the length of one sequence generated
 
 # seqF = open(sequenceFile,'ab')
@@ -45,6 +46,10 @@ total_len = 0
 merged_sequenced=""
 for j in range(0,prompts_num):
     tmp_seq = str(output[j][0]['generated_text']).encode().decode()
+    with open(tmpFile, "w") as wFile:
+        wFile.write(tmp_seq)
+    with open(tmpFile, "r") as rFile:
+        tmp_seq = rFile.read()
     total_len += len(tmp_seq)
     tmp_len = str(len(tmp_seq)) +'\n'
     merged_sequenced = merged_sequenced+tmp_seq
@@ -65,6 +70,3 @@ print('total generation time cost',time_end-time_start,'s')
 print('Sequence generated amount: %d' %  (prompts_num))
 
 print("total sequence length sum: %d" % (total_len))
-# seqF.close()
-# lenF.close()
-# generator.save_pretrained('./generator')
