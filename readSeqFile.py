@@ -22,5 +22,7 @@ for line in lines:
     print("我是分隔符~~~~~~~~~~~~~~~~~~~~~~")
     print(tmp_len)
 print(tmp_total_len)
+print("sequence number : %d " % (len(lines)))
+
 seqF.close()
 lenF.close()

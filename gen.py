@@ -7,7 +7,7 @@ sequenceFile = "sequences.txt"
 seqLenFile = "seqLen.txt"
 tmpFile ="template.txt"
 genTimes = 1      # iterations number (generating 128 sequence per iteration)
-prompts_num = 1024
+prompts_num = 4096
 max_length = 128    # the length of one sequence generated
 
 # seqF = open(sequenceFile,'ab')
