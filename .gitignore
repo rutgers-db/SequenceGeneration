@@ -1,0 +1,3 @@
+generator
+*.txt
+.ipynb_checkpoints
