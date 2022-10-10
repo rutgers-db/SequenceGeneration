@@ -1,16 +1,16 @@
 # read the sequences saved in the file
 # and the seq length information should be save in seqLen file
 
-sequenceFile = "sequences.txt"
-seqLenFile = "seqLen.txt"
+sequenceFile = "alias-gpt2-small/sequences.txt"
+seqLenFile = "alias-gpt2-small/seqLen.txt"
 
 seqF = open(sequenceFile,'r')
 lenF = open(seqLenFile,'r')
 
-# total_len = len(seqF.read())
-# print(total_len)
+
 lines = lenF.readlines()
 tmp_total_len = 0
+# print(len(lines))
 for line in lines:
     tmp_len = int(line)
     tmp_total_len += tmp_len
@@ -21,6 +21,8 @@ for line in lines:
     assert(tmp_len == len(str))
     print("我是分隔符~~~~~~~~~~~~~~~~~~~~~~")
     print(tmp_len)
+
+
 print(tmp_total_len)
 print("sequence number : %d " % (len(lines)))
 
