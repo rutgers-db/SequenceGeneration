@@ -3,10 +3,10 @@ import sentencepiece as spm
 # read the sequences saved in the file
 # and the seq length information should be save in seqLen file
 
-sequenceFile = "../alias-gpt2-small/sequences.txt"
-seqLenFile = "../alias-gpt2-small/seqLen.txt"
-encodedFile = "gpt2-small-seq.bin"
-sp = spm.SentencePieceProcessor(model_file='../../SIGMOD23-LMND-code/encoding/bpe_model/openwebtext_64K.model')
+sequenceFile = "../arwen-gpt2-medium-topk50/sequences.txt"
+seqLenFile = "../arwen-gpt2-medium-topk50/seqLen.txt"
+encodedFile = "gpt2-medium-topk50-seq.bin"
+sp = spm.SentencePieceProcessor(model_file='../../../SIGMOD23-LMND-code/encoding/bpe_model/openwebtext_64K.model')
 
 seqF = open(sequenceFile,'r')
 lenF = open(seqLenFile,'r')

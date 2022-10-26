@@ -1,14 +1,15 @@
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from transformers import GPT2LMHeadModel, GPT2Tokenizer, set_seed
 import time
 
-sequenceFile = "arwen-gpt2-medium/sequences.txt"
-seqLenFile = "arwen-gpt2-medium/seqLen.txt"
+sequenceFile = "gpt2-large-topk50/sequences.txt"
+seqLenFile = "gpt2-large-topk50/seqLen.txt"
+
 tmpFile ="template.txt"
 
-genTimes = 300
-returnSeqNum = 256 
-tokenizer = GPT2Tokenizer.from_pretrained("stanford-crfm/arwen-gpt2-medium-x21")
-model = GPT2LMHeadModel.from_pretrained("stanford-crfm/arwen-gpt2-medium-x21",device_map="auto", load_in_8bit=True)
+genTimes = 4
+returnSeqNum = 64 
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2-large")
+model = GPT2LMHeadModel.from_pretrained("gpt2-large",device_map="auto", load_in_8bit=True)
 
 #time on
 time_start=time.time()
@@ -16,8 +17,10 @@ seqLenList =[]
 total_len = 0
 merged_sequenced=""
 
+set_seed(21)
+
 for i in range(0,genTimes):
-    sample_output = model.generate(None, num_return_sequences=returnSeqNum, do_sample=True, min_length = 128, max_length=128)
+    sample_output = model.generate(None, num_return_sequences=returnSeqNum, do_sample=True, min_length = 512, max_length=512,top_k=50)
 
     for j in range(0,returnSeqNum):
         tmp_seq = tokenizer.decode(sample_output[j], skip_special_tokens=True)
