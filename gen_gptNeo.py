@@ -1,21 +1,23 @@
 from transformers import GPTNeoForCausalLM, GPT2Tokenizer
 import time
+import os
 
 # the name of son directory indicates the output_length, topk and training steps of the LM
-root_dir = "./text_generated/gpt-neo/540L_50TOPK_1.3B/"
-sequenceFile = root_dir+"sequences_2.txt"
-seqLenFile = root_dir+"seqLen_2.txt"
-tmpFile = root_dir+"template_2.txt"
+# root_dir = "./text_generated/gpt-neo/540L_50TOPK_1.3B/"
+root_dir = "./text_generated/gpt-neo/540L_50TOPK_2.7B/"
+sequenceFile = root_dir+"sequences.txt"
+seqLenFile = root_dir+"seqLen.txt"
+tmpFile = root_dir+"template.txt"
 
 # check if the directory exists
 import os
 if os.path.exists(root_dir) == False:
     raise Exception("No directory for saving the generated text.The root Dir does not exist")
 
-genTimes = 160
-returnSeqNum = 32
+genTimes = 4880
+returnSeqNum = 16
 
-gpt_neo_name = "EleutherAI/gpt-neo-1.3B"
+gpt_neo_name = "EleutherAI/gpt-neo-2.7B"
 
 tokenizer = GPT2Tokenizer.from_pretrained(gpt_neo_name)
 model = GPTNeoForCausalLM.from_pretrained(gpt_neo_name,device_map="sequential", load_in_8bit=True)
@@ -39,14 +41,18 @@ for i in range(0,genTimes):
         tmp_len = str(len(tmp_seq)) +'\n'
         merged_sequenced = merged_sequenced+tmp_seq
         seqLenList.append(tmp_len)
-    
-with open(sequenceFile, "a") as file:
+
+    if i%500 ==0:
+        os.system("keep-job 48")
+
+with open(sequenceFile, "a+") as file:
     file.write(merged_sequenced) 
 
-with open(seqLenFile,"a") as lenFile:
+with open(seqLenFile,"a+") as lenFile:
     lenFile.writelines(seqLenList)
 
 #time off
 time_end=time.time()
+print(sequenceFile+" writed")
 print('total generation time cost',time_end-time_start,'s')
 print('Sequence generated amount: %d' %  (returnSeqNum))
