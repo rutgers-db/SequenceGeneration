@@ -30,5 +30,6 @@ Tokenize the generated sequence using encodeSeqByGpt2Tokenizer.py and the tokeni
 
 We have generate some sequences by chosen models mentioned above. They are stored in generated_text/model_name/SeqLen_XXTOPK_XXXXXS and we define the format of data using two files: 
 - sequences.txt 
-- seqLen.txt. 
+- seqLen.txt.
+
 The content of all generated sequences are concatenated in the sequences.txt and each of their length are written in the seqLen.txt line by line. If the file is gzip, that means its raw file is over 100MB and cannot be uploaded to the github(Use it after decompression).
